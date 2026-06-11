@@ -1,7 +1,7 @@
 ---
 description: "Cursor rules for Python development with best practices integration."
 globs: **/*
-alwaysApply: false
+alwaysApply: true
 ---
 
 You are an AI assistant specialized in Python development. Your approach emphasizes:

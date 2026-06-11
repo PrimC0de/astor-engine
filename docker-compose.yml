@@ -1,0 +1,105 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-astor}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-astor}
+      POSTGRES_DB: ${POSTGRES_DB:-astor}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-astor} -d ${POSTGRES_DB:-astor}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: sqitch/sqitch:latest
+    working_dir: /db
+    volumes:
+      - ./backend/db:/db
+    command:
+      - deploy
+      - db:pg://${POSTGRES_USER:-astor}:${POSTGRES_PASSWORD:-astor}@postgres:5432/${POSTGRES_DB:-astor}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  go-service:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${GO_PORT:-8080}:8080"
+    environment:
+      PORT: "8080"
+      DATABASE_URL: ${DATABASE_URL:-postgres://astor:astor@postgres:5432/astor}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      INTERNAL_WEBHOOK_SECRET: ${INTERNAL_WEBHOOK_SECRET:-change-me-in-production}
+      N8N_WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://n8n:5678/webhook/research}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  python-service:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    ports:
+      - "${AGENTS_PORT:-8000}:8000"
+    environment:
+      CRYPTOPANIC_API_KEY: ${CRYPTOPANIC_API_KEY:-}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID:-}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET:-}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-astor}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-astor}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD:-astor}
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      WEBHOOK_URL: http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    environment:
+      VITE_API_URL: http://localhost:${GO_PORT:-8080}
+    depends_on:
+      go-service:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  n8n_data:

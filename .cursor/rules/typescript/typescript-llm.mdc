@@ -1,7 +1,7 @@
 ---
 description: "Cursor rules for TypeScript development with LLM tech stack integration."
 globs: **/*
-alwaysApply: false
+alwaysApply: true
 ---
 
 ## Role and Expertise:

@@ -1,0 +1,41 @@
+:root {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+p {
+  margin: 0;
+  color: #475569;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  font-size: 0.875rem;
+  color: #334155;
+}
