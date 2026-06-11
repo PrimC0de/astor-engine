@@ -19,12 +19,25 @@ services:
       timeout: 5s
       retries: 5
 
-  migrate:
+  sqitch:
     image: sqitch/sqitch:latest
     working_dir: /db
     volumes:
       - ./backend/db:/db
     entrypoint: ["sqitch"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  migrate:
+    image: sqitch/sqitch:latest
+    working_dir: /db
+    volumes:
+      - ./backend/db:/db
+    command:
+      - deploy
+      - db:pg://astor:astor@postgres:5432/astor
     depends_on:
       postgres:
         condition: service_healthy
