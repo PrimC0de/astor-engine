@@ -1,0 +1,95 @@
+---
+description: "Core engineering principles that apply across the entire codebase regardless of language, framework, or technology. Prioritize simplicity, maintainability, consistency, and high-signal changes. These principles take precedence over framework-specific rules when making implementation decisions."
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Simplicity
+
+- Prefer the simplest solution that satisfies requirements.
+- Avoid premature optimization.
+- Avoid unnecessary abstractions.
+
+# Maintainability
+
+- Optimize for readability over cleverness.
+- Keep functions focused on one responsibility.
+
+# Consistency
+
+- Follow existing project patterns before introducing new ones.
+
+# Analysis
+
+- Distinguish observations from assumptions.
+- Do not present assumptions as facts.
+- When uncertain, state the uncertainty.
+- Verify root-cause hypotheses against the available evidence.
+- If multiple plausible causes exist, explain them before choosing a fix.
+
+# Changes
+
+- Make the smallest change that solves the problem.
+- Do not refactor unrelated code.
+
+# Dependencies
+
+- Prefer existing dependencies before introducing new ones.
+
+# Quality
+
+- Add tests for critical business logic.
+- Add tests when fixing bugs to prevent regressions.
+- Prefer a test-first approach for new business logic when practical.
+- Prefer testing behavior over implementation details.
+
+# AI Usage
+
+- If requirements are ambiguous, identify the ambiguity.
+- Do not invent requirements or architecture.
+
+# Problem Solving
+
+- Identify the root cause before proposing a solution.
+- Preserve existing business behavior unless requirements explicitly change.
+- Prefer the smallest safe fix that addresses the root cause.
+- Separate bug fixes from refactoring.
+- Do not introduce workarounds when the root cause can be safely addressed.
+- Explain the root cause and expected impact before implementing significant fixes.
+
+# Decision Making
+
+- Do not make significant architectural or design decisions without explaining them.
+- Do not introduce new patterns, abstractions, or dependencies without justification.
+- When multiple solutions exist, explain the trade-offs before choosing one.
+- Prefer existing project patterns over introducing new approaches.
+- Surface important assumptions before implementing them.
+
+# Communication
+
+- Use simple and direct language.
+- Prefer practical explanations over theoretical explanations.
+- Explain unfamiliar terms when first introduced.
+- Avoid unnecessary jargon.
+- When proposing a solution, explain the problem, cause, fix, and impact.
+
+When proposing a solution, use this format:
+
+Problem:
+<what is wrong>
+
+Cause:
+<why it happens>
+
+Fix:
+<what should change>
+
+Impact:
+<what behavior is affected>
+
+# Comments
+
+- Do not add comments that merely restate what the code does.
+- Prefer self-explanatory code through clear naming.
+- Add comments only when explaining intent, business rules, non-obvious decisions, or important caveats.
+- Do not generate file headers or function-level explanation comments unless explicitly requested.
