@@ -10,7 +10,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-astor} -d ${POSTGRES_DB:-astor}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-astor} -d ${POSTGRES_DB:-astor}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -20,9 +24,7 @@ services:
     working_dir: /db
     volumes:
       - ./backend/db:/db
-    command:
-      - deploy
-      - db:pg://${POSTGRES_USER:-astor}:${POSTGRES_PASSWORD:-astor}@postgres:5432/${POSTGRES_DB:-astor}
+    entrypoint: ["sqitch"]
     depends_on:
       postgres:
         condition: service_healthy
@@ -61,7 +63,13 @@ services:
       REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID:-}
       REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET:-}
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        ]
       interval: 10s
       timeout: 5s
       retries: 3
