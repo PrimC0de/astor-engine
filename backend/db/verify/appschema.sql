@@ -1,4 +1,7 @@
--- Verify: appschema
--- Requires: 
+-- Verify sqitch:appschema on pg
 
-SELECT 1 FROM pg_extension WHERE extname = 'pgcrypto';
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;

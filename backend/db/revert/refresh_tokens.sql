@@ -1,8 +1,7 @@
--- Revert: refresh_tokens
--- Requires: 
+-- Revert sqitch:refresh_tokens from pg
 
 BEGIN;
 
-DROP TABLE IF EXISTS refresh_tokens;
+-- XXX Add DDLs here.
 
 COMMIT;

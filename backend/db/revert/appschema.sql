@@ -1,8 +1,7 @@
--- Revert: appschema
--- Requires: 
+-- Revert sqitch:appschema from pg
 
 BEGIN;
 
-DROP EXTENSION IF EXISTS pgcrypto;
+-- XXX Add DDLs here.
 
 COMMIT;

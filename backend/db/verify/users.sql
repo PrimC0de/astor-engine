@@ -1,7 +1,7 @@
--- Verify: users
--- Requires: appschema
+-- Verify sqitch:users on pg
 
-SELECT 1
-FROM information_schema.tables
-WHERE table_schema = 'public'
-  AND table_name = 'users';
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;

@@ -1,8 +1,7 @@
--- Revert: users
--- Requires: refresh_tokens research_jobs
+-- Revert sqitch:users from pg
 
 BEGIN;
 
-DROP TABLE IF EXISTS users;
+-- XXX Add DDLs here.
 
 COMMIT;

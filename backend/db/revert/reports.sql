@@ -1,8 +1,7 @@
--- Revert: reports
--- Requires: 
+-- Revert sqitch:reports from pg
 
 BEGIN;
 
-DROP TABLE IF EXISTS reports;
+-- XXX Add DDLs here.
 
 COMMIT;

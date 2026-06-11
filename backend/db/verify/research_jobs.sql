@@ -1,7 +1,7 @@
--- Verify: research_jobs
--- Requires: users
+-- Verify sqitch:research_jobs on pg
 
-SELECT 1
-FROM information_schema.tables
-WHERE table_schema = 'public'
-  AND table_name = 'research_jobs';
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;

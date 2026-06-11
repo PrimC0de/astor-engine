@@ -1,8 +1,7 @@
--- Deploy: appschema
--- Requires: 
+-- Deploy sqitch:appschema to pg
 
 BEGIN;
 
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+-- XXX Add DDLs here.
 
 COMMIT;

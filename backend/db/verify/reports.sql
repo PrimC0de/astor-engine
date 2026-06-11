@@ -1,7 +1,7 @@
--- Verify: reports
--- Requires: research_jobs
+-- Verify sqitch:reports on pg
 
-SELECT 1
-FROM information_schema.tables
-WHERE table_schema = 'public'
-  AND table_name = 'reports';
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;

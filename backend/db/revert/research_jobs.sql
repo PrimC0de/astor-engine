@@ -1,8 +1,7 @@
--- Revert: research_jobs
--- Requires: reports refresh_tokens
+-- Revert sqitch:research_jobs from pg
 
 BEGIN;
 
-DROP TABLE IF EXISTS research_jobs;
+-- XXX Add DDLs here.
 
 COMMIT;

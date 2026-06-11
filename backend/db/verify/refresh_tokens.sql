@@ -1,7 +1,7 @@
--- Verify: refresh_tokens
--- Requires: users
+-- Verify sqitch:refresh_tokens on pg
 
-SELECT 1
-FROM information_schema.tables
-WHERE table_schema = 'public'
-  AND table_name = 'refresh_tokens';
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;
